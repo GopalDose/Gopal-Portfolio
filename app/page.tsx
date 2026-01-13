@@ -5,7 +5,7 @@ import About from "./components/About";
 
 export default function Home() {
   return (
-    <main className="min-h-screen h-screen overflow-y-scroll snap-y snap-mandatory bg-white">
+    <main className="min-h-screen bg-white">
       <Header />
       <Hero />
       <About />
