@@ -6,7 +6,7 @@ import { gsap } from "gsap";
 export default function Hero() {
     const containerRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLDivElement>(null);
-    const [isHovered, setIsHovered] = React.useState(false);
+    const [hoveredItem, setHoveredItem] = React.useState<null | 'passion1' | 'passion2'>(null);
     const [isClicked, setIsClicked] = React.useState(false);
 
     useEffect(() => {
@@ -15,63 +15,100 @@ export default function Hero() {
         const ctx = gsap.context(() => {
             const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-            // Set initial states
-            gsap.set(".welcome-text", { y: 20, opacity: 0 });
-            gsap.set(".passion-1", { x: -50, opacity: 0 });
-            gsap.set(".passion-2", { x: -50, opacity: 0 });
-            gsap.set(".lets-talk-btn", { y: 20, opacity: 0 });
-            gsap.set(".scroll-down", { y: -10, opacity: 0 });
+            // Set initial states - using scoped selectors within container
+            const welcomeText = containerRef.current!.querySelector(".welcome-text");
+            const passion1 = containerRef.current!.querySelector(".passion-1");
+            const passion2 = containerRef.current!.querySelector(".passion-2");
+            const letsTalkBtn = containerRef.current!.querySelector(".lets-talk-btn");
+            const scrollDown = containerRef.current!.querySelector(".scroll-down");
+            const sideText = containerRef.current!.querySelector(".side-text");
+
+            if (welcomeText) gsap.set(welcomeText, { y: 20, opacity: 0 });
+            if (passion1) gsap.set(passion1, { x: -50, opacity: 0 });
+            if (passion2) gsap.set(passion2, { x: -50, opacity: 0 });
+            if (letsTalkBtn) gsap.set(letsTalkBtn, { y: 20, opacity: 0 });
+            if (scrollDown) gsap.set(scrollDown, { y: -10, opacity: 0 });
+            if (sideText) {
+                gsap.set(sideText, {
+                    rotation: -90,
+                    transformOrigin: "right bottom",
+                    y: 50,
+                    opacity: 0
+                });
+            }
 
             if (imageRef.current) {
                 gsap.set(imageRef.current, { opacity: 0, x: 50 });
             }
 
             // Animate Welcome Text
-            tl.to(".welcome-text", {
-                y: 0,
-                opacity: 1,
-                duration: 0.8,
-            })
-                // Animate Passion 1
-                .to(".passion-1", {
-                    x: 0,
-                    opacity: 1,
-                    duration: 1,
-                }, "-=0.4")
-                // Animate Passion 2
-                .to(".passion-2", {
-                    x: 0,
-                    opacity: 1,
-                    duration: 1,
-                }, "-=0.6")
-                // Animate Button
-                .to(".lets-talk-btn", {
+            if (welcomeText) {
+                tl.to(welcomeText, {
                     y: 0,
                     opacity: 1,
                     duration: 0.8,
-                }, "-=0.4")
-                // Animate Image
-                .to(imageRef.current, {
+                });
+            }
+            // Animate Passion 1
+            if (passion1) {
+                tl.to(passion1, {
                     x: 0,
                     opacity: 1,
-                    duration: 1.2,
-                    ease: "power3.out",
-                }, "-=0.8")
-                // Animate Scroll Down
-                .to(".scroll-down", {
+                    duration: 1,
+                }, "-=0.4");
+            }
+            // Animate Passion 2
+            if (passion2) {
+                tl.to(passion2, {
+                    x: 0,
+                    opacity: 1,
+                    duration: 1,
+                }, "-=0.6");
+            }
+            // Animate Button
+            if (letsTalkBtn) {
+                tl.to(letsTalkBtn, {
                     y: 0,
                     opacity: 1,
                     duration: 0.8,
                 }, "-=0.4");
+            }
+            // Animate Image
+            if (imageRef.current) {
+                tl.to(imageRef.current, {
+                    x: 0,
+                    opacity: 1,
+                    duration: 1.2,
+                    ease: "power3.out",
+                }, "-=0.8");
+            }
+            // Animate Scroll Down
+            if (scrollDown) {
+                tl.to(scrollDown, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                }, "-=0.4");
+            }
+            // Animate Side Text
+            if (sideText) {
+                tl.to(sideText, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                }, "-=0.6");
+            }
 
             // Continuous bounce animation for scroll down
-            gsap.to(".scroll-down", {
-                y: 10,
-                duration: 1.5,
-                ease: "power1.inOut",
-                repeat: -1,
-                yoyo: true
-            });
+            if (scrollDown) {
+                gsap.to(scrollDown, {
+                    y: 10,
+                    duration: 1.5,
+                    ease: "power1.inOut",
+                    repeat: -1,
+                    yoyo: true
+                });
+            }
 
         }, containerRef);
 
@@ -81,7 +118,7 @@ export default function Hero() {
     return (
         <section
             ref={containerRef}
-            className="relative w-full h-[95vh] bg-white overflow-hidden"
+            className="relative w-full h-[95vh] bg-white overflow-hidden snap-start"
         >
             {/* Container for split layout */}
             <div className="relative w-full h-full flex flex-col md:flex-row items-center justify-between px-8 md:px-12 lg:px-16">
@@ -96,20 +133,22 @@ export default function Hero() {
 
                     {/* Passion 1 - Webdesigner */}
                     <h1
-                        className="passion-1 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-family-media uppercase text-black select-none transition-all duration-500 whitespace-nowrap"
-                        style={{ letterSpacing: '2px' }}
-                        onMouseEnter={() => setIsHovered(true)}
-                        onMouseLeave={() => setIsHovered(false)}
+                        className={`font-semibold passion-1 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-family-media uppercase select-none transition-all duration-500 whitespace-nowrap ${hoveredItem === 'passion2' ? 'text-gray-500' : 'text-black'
+                            }`}
+                        style={{ letterSpacing: '0px' }}
+                        onMouseEnter={() => setHoveredItem('passion1')}
+                        onMouseLeave={() => setHoveredItem(null)}
                     >
                         Full Stack Developer
                     </h1>
 
                     {/* Passion 2 - & Photographer */}
                     <h1
-                        className="passion-2 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-family-media uppercase text-gray-500 select-none transition-all duration-500 whitespace-nowrap"
-                        style={{ letterSpacing: '2px' }}
-                        onMouseEnter={() => setIsHovered(true)}
-                        onMouseLeave={() => setIsHovered(false)}
+                        className={`font-semibold passion-2 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-family-media uppercase select-none transition-all duration-500 whitespace-nowrap ${hoveredItem === 'passion2' ? 'text-black' : 'text-gray-500'
+                            }`}
+                        style={{ letterSpacing: '0px' }}
+                        onMouseEnter={() => setHoveredItem('passion2')}
+                        onMouseLeave={() => setHoveredItem(null)}
                     >
                         & Problem Solver
                     </h1>
@@ -165,6 +204,15 @@ export default function Hero() {
                     />
                 </svg>
             </div>
+
+            {/* Side Text - Think Design Develop */}
+            {/* <div className="side-text absolute bottom-24 right-0 z-20 hidden md:block">
+                <p className="text-xs font-sans tracking-[0.2em] text-gray-500 font-bold uppercase whitespace-nowrap flex gap-4">
+                    <span>Think</span>
+                    <span>Design</span>
+                    <span>Develop</span>
+                </p>
+            </div> */}
 
         </section>
     );

@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Inter, Oswald } from "next/font/google"; // Using Google Fonts for better performance and style
 import "./globals.css";
 
-const sfpro = localFont({
-  src: "./fonts/SFPro.otf",
-  variable: "--font-sfpro",
+
+const sfpro = Inter({
+  subsets: ["latin"],
+  variable: "--font-sfpro", // Mapping Inter to the existing variable key
+  display: "swap",
 });
 
-const media = localFont({
-  src: "./fonts/Media.otf",
-  variable: "--font-media",
+const media = Oswald({ // Oswald is a strong, condensed sans-serif - great for impact
+  subsets: ["latin"],
+  variable: "--font-media", // Mapping to existing variable key
+  weight: ["200", "300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -23,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${sfpro.variable} ${media.variable} antialiased bg-white text-black`}
       >
