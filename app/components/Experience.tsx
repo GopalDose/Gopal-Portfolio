@@ -7,7 +7,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Experience() {
     const containerRef = useRef<HTMLDivElement>(null);
-    const cursorRef = useRef<HTMLDivElement>(null);
 
     const experiences = [
         {
@@ -35,19 +34,6 @@ export default function Experience() {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            // Custom Cursor Interaction
-            const moveCursor = (e: MouseEvent) => {
-                if (cursorRef.current) {
-                    gsap.to(cursorRef.current, {
-                        x: e.clientX,
-                        y: e.clientY,
-                        duration: 0.15,
-                        ease: "power2.out"
-                    });
-                }
-            };
-            window.addEventListener("mousemove", moveCursor);
-
             // Staggered Entrance Animation for items
             const items = document.querySelectorAll(".experience-item");
 
@@ -70,18 +56,11 @@ export default function Experience() {
         }, containerRef);
 
         return () => {
-            window.removeEventListener("mousemove", () => { }); // cleanup listener logic if extracted
             ctx.revert();
         };
     }, []);
 
-    const handleMouseEnter = () => {
-        if (cursorRef.current) gsap.to(cursorRef.current, { scale: 1, opacity: 1 });
-    };
 
-    const handleMouseLeave = () => {
-        if (cursorRef.current) gsap.to(cursorRef.current, { scale: 0, opacity: 0 });
-    };
 
     return (
         <section ref={containerRef} className="relative w-full min-h-screen bg-white py-24 px-8 md:px-16 flex flex-col items-center justify-center overflow-hidden z-10 snap-start">
@@ -101,9 +80,7 @@ export default function Experience() {
                     {experiences.map((exp, index) => (
                         <div
                             key={index}
-                            className="experience-item group relative w-full border-t border-gray-200 py-12 transition-all duration-500 hover:border-black cursor-none"
-                            onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave}
+                            className="experience-item group relative w-full border-t border-gray-200 py-12 transition-all duration-500 hover:border-black"
                         >
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                                 {/* Left: Role & Company */}
@@ -140,15 +117,7 @@ export default function Experience() {
                 </div>
             </div>
 
-            {/* Custom Cursor Element */}
-            <div
-                ref={cursorRef}
-                className="fixed top-0 left-0 w-32 h-32 bg-orange-500 rounded-full flex items-center justify-center z-[60] pointer-events-none transform -translate-x-1/2 -translate-y-1/2 opacity-0 mix-blend-multiply transition-opacity duration-300"
-            >
-                <div className="text-white text-center">
-                    <p className="font-bold text-sm uppercase tracking-widest">Connect</p>
-                </div>
-            </div>
+
 
         </section>
     );
