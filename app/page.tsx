@@ -4,6 +4,7 @@ import About from "./components/About";
 import Skills from "./components/Skills";
 import MarqueeBanner from "./components/MarqueeBanner";
 import Experience from "./components/Experience";
+import Projects from "./components/Projects";
 
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
       <Experience />
       <Skills />
       <MarqueeBanner />
+      <Projects />
     </main>
   );
 }

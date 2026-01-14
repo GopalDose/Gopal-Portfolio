@@ -6,7 +6,7 @@ import Image from "next/image";
 import {
     SiCplusplus, SiPython, SiJavascript, SiTypescript, SiPhp,
     SiHtml5, SiCss3, SiReact, SiNextdotjs, SiNodedotjs, SiExpress,
-    SiDotnet, SiDjango, SiSpringboot, SiMysql, SiString, SiPostgresql,
+    SiDotnet, SiDjango, SiSpringboot, SiMysql, SiPostgresql,
     SiFlutter, SiAndroid, SiMongodb
 } from "react-icons/si";
 import { FaJava, FaDatabase, FaNetworkWired, FaServer, FaSearch } from "react-icons/fa";
