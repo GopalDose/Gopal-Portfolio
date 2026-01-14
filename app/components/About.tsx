@@ -10,8 +10,25 @@ export default function About() {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const scrollTrackRef = useRef<HTMLDivElement>(null);
     const headerRef = useRef<HTMLDivElement>(null);
+    const cursorRef = useRef<HTMLDivElement>(null);
     const [downloading, setDownloading] = React.useState(false);
     const [activeSection, setActiveSection] = React.useState<'who-i-am' | 'education'>('who-i-am');
+
+    useEffect(() => {
+        // Move custom cursor
+        const moveCursor = (e: MouseEvent) => {
+            if (cursorRef.current) {
+                gsap.to(cursorRef.current, {
+                    x: e.clientX,
+                    y: e.clientY,
+                    duration: 0.15,
+                    ease: "power2.out"
+                });
+            }
+        };
+        window.addEventListener("mousemove", moveCursor);
+        return () => window.removeEventListener("mousemove", moveCursor);
+    }, []);
 
     const points = [
         "Passionate about creating intuitive web experiences",
@@ -26,19 +43,22 @@ export default function About() {
             year: "2023 - 2026",
             degree: "B.E. Computer Engineering",
             institution: "Pune Institute of Computer Technology",
-            description: "Currently pursuing. CGPA: 9.4"
+            description: "Currently pursuing. CGPA: 9.4",
+            link: "https://www.pict.edu/"
         },
         {
             year: "2020 - 2023",
             degree: "Diploma in Information Technology",
             institution: "Government Polytechnic, Kolhapur",
-            description: "Achieved 96.53%"
+            description: "Achieved 96.53%",
+            link: "https://www.gpkolhapur.ac.in/"
         },
         {
             year: "2019 - 2020",
             degree: "Secondary School Certificate",
             institution: "M. S. M. English School",
-            description: "Scored 90.00%"
+            description: "Scored 90.00%",
+            link: "https://msmschool.org/"
         }
     ];
 
@@ -75,7 +95,7 @@ export default function About() {
 
                     // Horizontal Scroll
                     const horizontalTween = gsap.to(scrollTrack, {
-                        x: -scrollDistance, // Move left by 1 screen width
+                        xPercent: -50, // Move left by 50% of the track width (which is 200vw, so 100vw)
                         ease: "none",
                         scrollTrigger: {
                             trigger: scrollContainer,
@@ -273,7 +293,12 @@ export default function About() {
                                         {/* Dot */}
                                         <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-black border-2 border-white"></div>
                                         {/* Content */}
-                                        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                                        <div
+                                            // Mobile: Simple valid link click behavior, no custom cursor needed usually but can add if requested. 
+                                            // keeping simple for mobile as they don't hover.
+                                            onClick={() => window.open(edu.link, '_blank')}
+                                            className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm active:scale-95 transition-transform duration-200"
+                                        >
                                             <span className="text-xs font-bold tracking-wider text-orange-500 uppercase mb-2 block">{edu.year}</span>
                                             <h4 className="text-xl font-family-media font-bold text-black mb-1">{edu.degree}</h4>
                                             <p className="font-medium text-sm text-gray-600 mb-3">{edu.institution}</p>
@@ -337,7 +362,16 @@ export default function About() {
                                                 <div className={`connector-line w-[2px] h-12 bg-gray-200`}></div>
 
                                                 {/* Card Content - Pushed away by flex layout */}
-                                                <div className="card-content bg-white p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-gray-100 hover:shadow-lg transition-shadow duration-300 w-full relative z-20 my-4">
+                                                <div
+                                                    onClick={() => window.open(edu.link, '_blank')}
+                                                    onMouseEnter={() => {
+                                                        if (cursorRef.current) gsap.to(cursorRef.current, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.7)" });
+                                                    }}
+                                                    onMouseLeave={() => {
+                                                        if (cursorRef.current) gsap.to(cursorRef.current, { scale: 0, opacity: 0, duration: 0.2 });
+                                                    }}
+                                                    className="card-content bg-white p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-gray-100 hover:shadow-lg transition-shadow duration-300 w-full relative z-20 my-4 cursor-none"
+                                                >
                                                     <span className="inline-block px-3 py-1 bg-gray-50 text-xs font-bold tracking-wider text-black uppercase rounded-full mb-3 border border-gray-100">{edu.year}</span>
                                                     <h4 className="text-xl font-family-media font-bold text-black leading-tight mb-1">{edu.degree}</h4>
                                                     <p className="font-medium text-sm text-gray-500 font-sans mb-3">{edu.institution}</p>
@@ -352,6 +386,14 @@ export default function About() {
 
                     </div>
                 </div>
+            </div>
+
+            {/* Custom Cursor Element */}
+            <div
+                ref={cursorRef}
+                className="fixed top-0 left-0 w-24 h-24 bg-orange-500 rounded-full flex items-center justify-center z-[60] pointer-events-none transform -translate-x-1/2 -translate-y-1/2 opacity-0 mix-blend-multiply"
+            >
+                <span className="text-white font-bold text-sm uppercase tracking-widest">View</span>
             </div>
         </div>
     );
