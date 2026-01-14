@@ -3,25 +3,62 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Image from "next/image";
+import {
+    SiCplusplus, SiPython, SiJavascript, SiTypescript, SiPhp,
+    SiHtml5, SiCss3, SiReact, SiNextdotjs, SiNodedotjs, SiExpress,
+    SiDotnet, SiDjango, SiSpringboot, SiMysql, SiString, SiPostgresql,
+    SiFlutter, SiAndroid, SiMongodb
+} from "react-icons/si";
+import { FaJava, FaDatabase, FaNetworkWired, FaServer, FaSearch } from "react-icons/fa";
+import { TbSeo } from "react-icons/tb";
+import { AiOutlineTeam } from "react-icons/ai";
 
 const SKILL_CATEGORIES = [
     {
-        name: "Languages",
+        name: "Web Technologies",
         radius: 350,
-        duration: 60,
-        skills: ["TypeScript", "JavaScript", "Python", "HTML5", "CSS3", "SQL", "C++"],
+        duration: 70,
+        items: [
+            { icon: SiHtml5, name: "HTML" },
+            { icon: SiCss3, name: "CSS" },
+            { icon: SiReact, name: "React.js" },
+            { icon: SiNextdotjs, name: "Next.js" },
+            { icon: SiNodedotjs, name: "Node.js" },
+            { icon: SiExpress, name: "Express.js" },
+            { icon: SiDotnet, name: "ASP.NET" },
+            { icon: SiDjango, name: "Django" },
+            { icon: SiSpringboot, name: "Spring Boot" },
+        ],
     },
     {
-        name: "Frameworks",
+        name: "Languages & Databases",
         radius: 250,
-        duration: 50,
-        skills: ["React", "Next.js", "Tailwind", "GSAP", "Framer Motion", "Three.js"],
+        duration: 60,
+        items: [
+            { icon: SiCplusplus, name: "C++" },
+            { icon: FaJava, name: "Java" },
+            { icon: SiPython, name: "Python" },
+            { icon: SiJavascript, name: "JavaScript" },
+            { icon: SiTypescript, name: "TypeScript" },
+            { icon: SiPhp, name: "PHP" },
+            { icon: SiMysql, name: "MySQL" },
+            { icon: SiMongodb, name: "MongoDB" },
+            { icon: SiPostgresql, name: "PostgreSQL" },
+        ],
     },
     {
-        name: "Tools & DBs",
+        name: "Mobile, Core & Other",
         radius: 150,
-        duration: 40,
-        skills: ["Git", "GitHub", "Node.js", "PostgreSQL", "MongoDB", "Figma", "Vercel"],
+        duration: 50,
+        items: [
+            { icon: SiFlutter, name: "Flutter" },
+            { icon: SiAndroid, name: "Android" },
+            { icon: FaServer, name: "OS" },
+            { icon: FaDatabase, name: "DBMS" },
+            { icon: FaNetworkWired, name: "CN" },
+            { icon: TbSeo, name: "SEO" },
+            { icon: AiOutlineTeam, name: "Cooperative Web Management" },
+        ],
     },
 ];
 
@@ -87,13 +124,14 @@ export default function Skills() {
                             borderRadius: catIndex === 0 ? '45% 55% 40% 60% / 55% 45% 60% 40%' : catIndex === 1 ? '60% 40% 55% 45% / 40% 60% 45% 55%' : '50% 50% 45% 55% / 55% 45% 50% 50%',
                         }}
                     >
-                        {category.skills.map((skill, skillIndex) => {
-                            const totalSkills = category.skills.length;
+                        {category.items.map((item, skillIndex) => {
+                            const totalSkills = category.items.length;
                             const angle = (skillIndex / totalSkills) * 360;
+                            const Icon = item.icon;
 
                             return (
                                 <div
-                                    key={skill}
+                                    key={item.name}
                                     className="absolute top-1/2 left-1/2 w-0 h-0 flex items-center justify-center"
                                     style={{
                                         transform: `rotate(${angle}deg) translateY(-${category.radius}px)`,
@@ -101,12 +139,18 @@ export default function Skills() {
                                 >
                                     {/* The Item wrapper that gets counter-rotated */}
                                     <div
-                                        className={`item-group-${catIndex} bg-white px-5 py-3 rounded-full border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all cursor-pointer whitespace-nowrap`}
+                                        className={`item-group-${catIndex} bg-white p-3 rounded-full border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all cursor-pointer group relative`}
                                         style={{
                                             transform: `rotate(-${angle}deg)`
                                         }}
+                                        title={item.name}
                                     >
-                                        <span className="font-[family-name:var(--font-family-sans)] font-bold text-base text-black">{skill}</span>
+                                        <Icon className="text-2xl md:text-3xl text-black" />
+
+                                        {/* Optional Tooltip on Hover */}
+                                        <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                                            {item.name}
+                                        </span>
                                     </div>
                                 </div>
                             );
