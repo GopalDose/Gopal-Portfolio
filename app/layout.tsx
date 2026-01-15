@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Oswald } from "next/font/google"; // Using Google Fonts for better performance and style
 import "./globals.css";
-
+import Preloader from "./components/Preloader"; // Import Preloader
 
 import Footer from "./components/Footer";
 
@@ -33,6 +33,7 @@ export default function RootLayout({
       <body
         className={`${sfpro.variable} ${media.variable} antialiased bg-white text-black`}
       >
+        <Preloader />
         {children}
         <Footer />
       </body>

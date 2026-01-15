@@ -3,79 +3,81 @@ import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 
 export default function Preloader() {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [showLoader, setShowLoader] = useState(true);
+    const topHalfRef = useRef<HTMLDivElement>(null);
+    const bottomHalfRef = useRef<HTMLDivElement>(null);
+    const messageRef = useRef<HTMLDivElement>(null);
+    const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
-        if (!containerRef.current) return;
-
         const ctx = gsap.context(() => {
-            const words = containerRef.current!.querySelectorAll(".word");
-            
-            if (words.length === 0) {
-                setShowLoader(false);
-                return;
-            }
+            const tl = gsap.timeline();
 
-            const tl = gsap.timeline({
-                onComplete: () => {
-                    setShowLoader(false);
-                }
-            });
+            // Initial state: Message hidden
+            gsap.set(messageRef.current, { opacity: 0 });
 
-            // Initial states
-            gsap.set(containerRef.current, { display: "flex" });
-            gsap.set(words, { opacity: 0, y: 20 });
-
-            // Animation Sequence
-            tl.to(words, {
+            tl.to(messageRef.current, {
                 opacity: 1,
-                y: 0,
                 duration: 0.8,
-                stagger: 0.4, // Reveal one by one
-                ease: "power3.out"
+                ease: "power2.out",
             })
-                // Hold for a moment to let the user see the full message
-                .to({}, { duration: 1.5 })
-                // Slide up exit
-                .to(containerRef.current, {
-                    yPercent: -100,
+                .to({}, { duration: 1.5 }) // Hold the message for 1.5 seconds
+                .to(messageRef.current, {
+                    opacity: 0,
                     duration: 0.8,
-                    ease: "power3.inOut"
-                });
-
-        }, containerRef);
+                    y: "-50px", // Float up slightly on exit
+                    ease: "power2.in",
+                })
+                .to(
+                    topHalfRef.current,
+                    {
+                        yPercent: -100,
+                        duration: 1,
+                        ease: "power2.inOut",
+                    },
+                    "-=0.2" // Overlap slightly with message fade out
+                )
+                .to(
+                    bottomHalfRef.current,
+                    {
+                        yPercent: 100,
+                        duration: 1,
+                        ease: "power2.inOut",
+                        onComplete: () => {
+                            setIsVisible(false);
+                        },
+                    },
+                    "<" // Start at same time as top half
+                );
+        });
 
         return () => ctx.revert();
     }, []);
 
-    if (!showLoader) return null;
+    if (!isVisible) return null;
 
     return (
-        <div
-            ref={containerRef}
-            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black overflow-hidden"
-        >
-            <div className="relative flex flex-col items-center justify-center gap-2 md:gap-4 p-8">
-                <div className="flex flex-wrap justify-center gap-x-3 md:gap-x-6 gap-y-2 max-w-4xl text-center">
-                    {["WELCOME", "TO", "MY", "PORTFOLIO"].map((word, index) => (
-                        <span
-                            key={index}
-                            className="word text-5xl md:text-7xl lg:text-9xl font-black tracking-tighter"
-                            style={{
-                                fontFamily: 'var(--font-media)',
-                                backgroundImage: 'url(/assets/loader.png)',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                WebkitBackgroundClip: 'text',
-                                backgroundClip: 'text',
-                                color: 'transparent',
-                                WebkitTextFillColor: 'transparent', // Crucial for some browsers
-                            }}
-                        >
-                            {word}
-                        </span>
-                    ))}
+        <div className="fixed inset-0 z-[1000] overflow-hidden flex flex-col pointer-events-none">
+            {/* Top Half Background */}
+            <div
+                ref={topHalfRef}
+                className="absolute top-0 left-0 w-full h-1/2 bg-[#060606] z-20 pointer-events-auto"
+            />
+
+            {/* Bottom Half Background */}
+            <div
+                ref={bottomHalfRef}
+                className="absolute bottom-0 left-0 w-full h-1/2 bg-[#060606] z-20 pointer-events-auto"
+            />
+
+            {/* Content Container (Above backgrounds) */}
+            <div className="absolute inset-0 z-30 flex flex-col items-center justify-center p-8 pointer-events-none">
+                {/* Intro Message */}
+                <div
+                    ref={messageRef}
+                    className="flex flex-col md:flex-row items-center justify-center gap-2 text-white text-2xl md:text-4xl font-light text-center opacity-0"
+                    style={{ fontFamily: 'var(--font-media)' }}
+                >
+                    welcome to <span className="text-orange-400 font-bold ml-1">MY PORTFOLIO</span>.
                 </div>
             </div>
         </div>
