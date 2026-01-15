@@ -3,6 +3,8 @@ import { Inter, Oswald } from "next/font/google"; // Using Google Fonts for bett
 import "./globals.css";
 
 
+import Footer from "./components/Footer";
+
 const sfpro = Inter({
   subsets: ["latin"],
   variable: "--font-sfpro", // Mapping Inter to the existing variable key
@@ -32,6 +34,7 @@ export default function RootLayout({
         className={`${sfpro.variable} ${media.variable} antialiased bg-white text-black`}
       >
         {children}
+        <Footer />
       </body>
     </html>
   );

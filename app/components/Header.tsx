@@ -3,12 +3,10 @@ import React from "react";
 
 export default function Header() {
   const navItems = [
-    { name: "Home", href: "#" },
-    { name: "My Works", href: "#" },
-    { name: "Case Studies", href: "#" },
-    { name: "Moodboard", href: "#" },
-    { name: "Psychology", href: "#" },
-    { name: "Courses", href: "#" },
+    { name: "Experience", href: "#experience" },
+    { name: "Projects", href: "#projects" },
+    { name: "Awards", href: "#awards" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
@@ -32,8 +30,8 @@ export default function Header() {
       </nav>
 
       {/* Action */}
-      <button className="hidden md:block px-6 py-2 text-sm font-medium text-black border border-gray-300 rounded-lg hover:bg-black hover:text-white transition-all cursor-pointer">
-        Log In
+      <button className="hidden md:block px-6 py-2.5 text-sm font-medium text-white bg-black rounded-full hover:bg-gray-800 transition-all cursor-pointer shadow-md hover:shadow-lg">
+        Get in Touch
       </button>
 
       {/* Mobile Menu Button (Placeholder) */}

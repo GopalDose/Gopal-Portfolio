@@ -109,8 +109,8 @@ export default function Skills() {
             <div className="relative flex items-center justify-center w-[800px] h-[800px] scale-[0.55] sm:scale-75 md:scale-95 lg:scale-100 transition-transform duration-500 mt-24">
                 {/* Central "Core" Doodle */}
                 <div className="absolute z-20 flex items-center justify-center pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center animate-bounce shadow-xl border-2 border-black p-3">
-                        <Image src="/assets/create_doodle.png" alt="Creative Doodle" width={100} height={100} className="w-full h-full object-contain" />
+                    <div className="w-24 h-24 bg-black text-white font-bold rounded-full flex items-center justify-center animate-bounce shadow-xl border-2 border-black p-2 text-xs">
+                        Tech & Tool
                     </div>
                 </div>
 
