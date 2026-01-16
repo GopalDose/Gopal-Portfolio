@@ -208,29 +208,31 @@ export default function ContactPage() {
                 ))}
             </div>
 
-            {/* Hero Section */}
-            <section ref={heroRef} className="relative w-full bg-white py-24 md:py-32 px-8 md:px-16 z-10">
-                <div className="w-full max-w-7xl mx-auto">
+            {/* Hero Section with Watermark Heading */}
+            <section ref={heroRef} className="relative w-full bg-white min-h-[50vh] md:h-[70vh] flex items-center px-4 sm:px-8 md:px-16 py-12 md:py-0 overflow-hidden">
+                <div className="w-full max-w-7xl mx-auto relative z-10">
                     {/* Watermark Heading */}
-                    <div className="relative mb-12 z-0">
+                    <div className="relative mb-8 md:mb-12 z-0">
+                        {/* Light grey watermark text */}
                         <h1 
                             ref={watermarkRef}
-                            className="text-8xl md:text-[12rem] font-bold font-[family-name:var(--font-family-media)] text-gray-300 absolute -top-8 md:-top-16 left-0 select-none pointer-events-none uppercase z-0"
+                            className="text-5xl sm:text-6xl md:text-8xl lg:text-[12rem] font-bold font-[family-name:var(--font-family-media)] text-gray-300 absolute -top-4 sm:-top-6 md:-top-8 lg:-top-16 left-0 select-none pointer-events-none uppercase z-0 leading-none"
                             style={{ zIndex: 0 }}
                         >
                             CONTACT
                         </h1>
+                        {/* Main heading overlaying the watermark */}
                         <h2 
                             ref={headingRef}
-                            className="text-5xl md:text-7xl font-bold font-[family-name:var(--font-family-media)] text-black relative z-10 pt-8 md:pt-16"
+                            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold font-[family-name:var(--font-family-media)] text-black relative z-10 pt-6 sm:pt-8 md:pt-12 lg:pt-16"
                         >
                             Get in Touch
                         </h2>
                     </div>
 
-                    {/* Description */}
-                    <div ref={descriptionRef} className="relative z-10 max-w-3xl mb-16">
-                        <p className="text-xl md:text-2xl text-gray-700 font-[family-name:var(--font-family-sans)] leading-relaxed">
+                    {/* Description Section */}
+                    <div ref={descriptionRef} className="relative z-10 max-w-3xl">
+                        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 font-[family-name:var(--font-family-sans)] leading-relaxed">
                             Let's collaborate and bring your ideas to life. Whether you have a project in mind or just want to connect, I'd love to hear from you.
                         </p>
                     </div>
@@ -238,7 +240,7 @@ export default function ContactPage() {
             </section>
 
             {/* Contact Section */}
-            <section ref={containerRef} className="relative w-full bg-white py-12 md:py-24 px-8 md:px-16 z-10">
+            <section ref={containerRef} className="relative w-full bg-white py-10 px-8 md:px-16 z-10">
                 <div className="w-full max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24">
                         {/* Contact Form */}
