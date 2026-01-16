@@ -75,45 +75,49 @@ export default function AwardsPage() {
     <main className="min-h-screen bg-white">
       <Header />
       
-      {/* Hero Section with Watermark Heading */}
-      <section ref={heroRef} className="relative w-full bg-white min-h-[50vh] md:h-[70vh] flex items-center px-4 sm:px-8 md:px-16 py-12 md:py-0 overflow-hidden">
-        <div className="w-full max-w-7xl mx-auto relative z-10">
-          {/* Watermark Heading */}
-          <div className="relative mb-8 md:mb-12 z-0">
-            {/* Light grey watermark text */}
-            <h1
-              ref={watermarkRef}
-              className="text-5xl sm:text-6xl md:text-8xl lg:text-[12rem] font-bold font-[family-name:var(--font-family-media)] text-gray-300 absolute -top-4 sm:-top-6 md:-top-8 lg:-top-16 left-0 select-none pointer-events-none uppercase z-0 leading-none"
-              style={{ zIndex: 0 }}
-            >
-              AWARDS
-            </h1>
-            {/* Main heading overlaying the watermark */}
-            <h2
-              ref={headingRef}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold font-[family-name:var(--font-family-media)] text-black relative z-10 pt-6 sm:pt-8 md:pt-12 lg:pt-16"
-            >
-              Honors & Awards
-            </h2>
-          </div>
-
-          {/* Description Section */}
-          <div ref={descriptionRef} className="relative z-10 max-w-3xl">
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 font-[family-name:var(--font-family-sans)] leading-relaxed">
-              Recognition of achievements and excellence in competitions,
-              hackathons, and technical challenges.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Awards Grid Section */}
+      {/* Awards Section - Two Column Layout */}
       <section
         ref={containerRef}
-        className="relative w-full bg-white py-10 px-8 md:px-16 z-10"
+        className="relative w-full bg-white py-24 md:py-32 px-8 md:px-16 z-10 min-h-screen"
       >
         <div className="w-full max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+          <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-start">
+            {/* Sticky Left Section - Header & Description */}
+            <div className="w-full md:w-1/2 md:sticky md:top-24 md:h-screen md:flex md:flex-col md:justify-center">
+              {/* Header Section */}
+              <div>
+                {/* Watermark Heading */}
+                <div className="relative mb-12 z-0">
+                  {/* Light grey watermark text */}
+                  <h1
+                    ref={watermarkRef}
+                    className="text-8xl md:text-[12rem] font-bold font-[family-name:var(--font-family-media)] text-gray-300 absolute -top-8 md:-top-16 left-0 select-none pointer-events-none uppercase z-0"
+                    style={{ zIndex: 0 }}
+                  >
+                    AWARDS
+                  </h1>
+                  {/* Main heading overlaying the watermark */}
+                  <h2
+                    ref={headingRef}
+                    className="text-5xl md:text-7xl font-bold font-[family-name:var(--font-family-media)] text-black relative z-10 pt-8 md:pt-16"
+                  >
+                    Honors & Awards
+                  </h2>
+                </div>
+
+                {/* Description Section */}
+                <div ref={descriptionRef} className="relative z-10 max-w-2xl">
+                  <p className="text-xl md:text-2xl text-gray-700 font-[family-name:var(--font-family-sans)] leading-relaxed">
+                    Recognition of achievements and excellence in competitions,
+                    hackathons, and technical challenges.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Scrollable Right Section - Award Cards Grid */}
+            <div ref={awardsRef} className="w-full md:w-1/2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
                 {AWARDS.map((award, index) => (
                   <div
                     key={index}
@@ -177,30 +181,32 @@ export default function AwardsPage() {
                     </div>
                   </div>
                 ))}
-          </div>
+              </div>
 
-          {/* Back to Home Link */}
-          <div className="mt-20 text-center">
-            <Link
-              href="/"
-              className="group inline-flex items-center gap-3 px-6 py-3 transition-all duration-300 font-[family-name:var(--font-family-sans)] border border-gray-200 rounded-full hover:border-black hover:bg-black hover:text-white text-gray-600"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-                />
-              </svg>
-              <span className="font-medium">Back to Home</span>
-            </Link>
+              {/* Back to Home Link */}
+              <div className="mt-20 text-center md:text-left">
+                <Link
+                  href="/"
+                  className="group inline-flex items-center gap-3 px-6 py-3 transition-all duration-300 font-[family-name:var(--font-family-sans)] border border-gray-200 rounded-full hover:border-black hover:bg-black hover:text-white text-gray-600"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                    />
+                  </svg>
+                  <span className="font-medium">Back to Home</span>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>

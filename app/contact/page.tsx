@@ -28,6 +28,8 @@ export default function ContactPage() {
         email: "",
         message: ""
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -163,31 +165,84 @@ export default function ContactPage() {
         });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         
-        // Button animation on submit
-        if (submitButtonRef.current) {
-            gsap.to(submitButtonRef.current, {
-                scale: 0.95,
-                duration: 0.1,
-                yoyo: true,
-                repeat: 1,
-                onComplete: () => {
-                    // Reset form
-                    setFormData({ name: "", email: "", message: "" });
-                    // Success animation
-                    gsap.to(submitButtonRef.current, {
-                        scale: 1.1,
-                        duration: 0.3,
-                        yoyo: true,
-                        repeat: 1
-                    });
-                }
+        if (isSubmitting) return;
+
+        setIsSubmitting(true);
+        setSubmitStatus({ type: null, message: '' });
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
             });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to send message');
+            }
+
+            // Success
+            setSubmitStatus({ type: 'success', message: 'Message sent successfully! I\'ll get back to you soon.' });
+            
+            // Button animation on success
+            if (submitButtonRef.current) {
+                gsap.to(submitButtonRef.current, {
+                    scale: 1.1,
+                    duration: 0.3,
+                    yoyo: true,
+                    repeat: 1,
+                    onComplete: () => {
+                        // Reset form
+                        setFormData({ name: "", email: "", message: "" });
+                        // Reset button
+                        gsap.to(submitButtonRef.current, {
+                            scale: 1,
+                            duration: 0.3
+                        });
+                    }
+                });
+            }
+
+            // Clear success message after 5 seconds
+            setTimeout(() => {
+                setSubmitStatus({ type: null, message: '' });
+            }, 5000);
+
+        } catch (error) {
+            console.error('Form submission error:', error);
+            setSubmitStatus({ 
+                type: 'error', 
+                message: error instanceof Error ? error.message : 'Failed to send message. Please try again.' 
+            });
+
+            // Error animation
+            if (submitButtonRef.current) {
+                gsap.to(submitButtonRef.current, {
+                    x: -10,
+                    duration: 0.1,
+                    yoyo: true,
+                    repeat: 4,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        gsap.set(submitButtonRef.current, { x: 0 });
+                    }
+                });
+            }
+
+            // Clear error message after 5 seconds
+            setTimeout(() => {
+                setSubmitStatus({ type: null, message: '' });
+            }, 5000);
+        } finally {
+            setIsSubmitting(false);
         }
-        
-        console.log("Form submitted", formData);
     };
 
     return (
@@ -323,11 +378,25 @@ export default function ContactPage() {
                                     <button
                                         ref={submitButtonRef}
                                         type="submit"
-                                        className="group bg-black text-white px-10 py-4 rounded-full font-bold text-lg flex items-center gap-3 hover:bg-orange-500 transition-all duration-300 font-[family-name:var(--font-family-media)] shadow-lg hover:shadow-xl hover:scale-105"
+                                        disabled={isSubmitting}
+                                        className="group bg-black text-white px-10 py-4 rounded-full font-bold text-lg flex items-center gap-3 hover:bg-orange-500 transition-all duration-300 font-[family-name:var(--font-family-media)] shadow-lg hover:shadow-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
-                                        Send Message
-                                        <GoArrowRight className="text-xl group-hover:translate-x-2 transition-transform duration-300" />
+                                        {isSubmitting ? 'Sending...' : 'Send Message'}
+                                        {!isSubmitting && <GoArrowRight className="text-xl group-hover:translate-x-2 transition-transform duration-300" />}
                                     </button>
+                                    
+                                    {/* Status Message */}
+                                    {submitStatus.type && (
+                                        <div className={`mt-4 p-4 rounded-lg ${
+                                            submitStatus.type === 'success' 
+                                                ? 'bg-green-50 text-green-800 border border-green-200' 
+                                                : 'bg-red-50 text-red-800 border border-red-200'
+                                        }`}>
+                                            <p className="text-sm font-[family-name:var(--font-family-sans)]">
+                                                {submitStatus.message}
+                                            </p>
+                                        </div>
+                                    )}
                                 </div>
                             </form>
                         </div>

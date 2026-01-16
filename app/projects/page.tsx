@@ -90,7 +90,7 @@ export default function ProjectsPage() {
                             ref={headingRef}
                             className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold font-[family-name:var(--font-family-media)] text-black relative z-10 pt-6 sm:pt-8 md:pt-12 lg:pt-16"
                         >
-                            Projects
+                            My Works
                         </h2>
                     </div>
 

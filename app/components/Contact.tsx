@@ -10,14 +10,65 @@ import gsap from "gsap";
 
 export default function Contact() {
     const formRef = useRef<HTMLFormElement>(null);
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        message: ""
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
 
-    // Form submission logic can be expanded here
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
 
-
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle submission logic here
-        console.log("Form submitted");
+        
+        if (isSubmitting) return;
+
+        setIsSubmitting(true);
+        setSubmitStatus({ type: null, message: '' });
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to send message');
+            }
+
+            // Success
+            setSubmitStatus({ type: 'success', message: 'Message sent successfully! I\'ll get back to you soon.' });
+            setFormData({ name: "", email: "", message: "" });
+
+            // Clear success message after 5 seconds
+            setTimeout(() => {
+                setSubmitStatus({ type: null, message: '' });
+            }, 5000);
+
+        } catch (error) {
+            console.error('Form submission error:', error);
+            setSubmitStatus({ 
+                type: 'error', 
+                message: error instanceof Error ? error.message : 'Failed to send message. Please try again.' 
+            });
+
+            // Clear error message after 5 seconds
+            setTimeout(() => {
+                setSubmitStatus({ type: null, message: '' });
+            }, 5000);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -49,7 +100,11 @@ export default function Contact() {
                             <input
                                 type="text"
                                 id="name"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleInputChange}
                                 placeholder="Hello..."
+                                required
                                 className="w-full border-b border-gray-300 py-3 focus:outline-none focus:border-black transition-colors bg-transparent placeholder-gray-400 font-[family-name:var(--font-family-sans)]"
                             />
                         </div>
@@ -58,7 +113,11 @@ export default function Contact() {
                             <input
                                 type="email"
                                 id="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
                                 placeholder="Where can i reply"
+                                required
                                 className="w-full border-b border-gray-300 py-3 focus:outline-none focus:border-black transition-colors bg-transparent placeholder-gray-400 font-[family-name:var(--font-family-sans)]"
                             />
                         </div>
@@ -70,23 +129,40 @@ export default function Contact() {
                         <label htmlFor="message" className="block text-sm font-bold mb-2 font-[family-name:var(--font-family-media)]">Message</label>
                         <textarea
                             id="message"
+                            name="message"
+                            value={formData.message}
+                            onChange={handleInputChange}
                             rows={4}
                             placeholder="Tell us about your project..."
+                            required
                             className="w-full border-b border-gray-300 py-3 focus:outline-none focus:border-black transition-colors bg-transparent placeholder-gray-400 font-[family-name:var(--font-family-sans)] resize-none"
                         ></textarea>
                     </div>
 
                     {/* Submit Button */}
                     <div className="flex justify-end pt-8 relative">
-
                         <button
                             type="submit"
-                            className="bg-black text-white px-10 py-4 rounded-full font-bold text-lg flex items-center gap-2 hover:bg-gray-800 transition-colors duration-300 group font-[family-name:var(--font-family-media)]"
+                            disabled={isSubmitting}
+                            className="bg-black text-white px-10 py-4 rounded-full font-bold text-lg flex items-center gap-2 hover:bg-gray-800 transition-colors duration-300 group font-[family-name:var(--font-family-media)] disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            Send Me
-                            <GoArrowRight className="text-xl group-hover:translate-x-1 transition-transform" />
+                            {isSubmitting ? 'Sending...' : 'Send Me'}
+                            {!isSubmitting && <GoArrowRight className="text-xl group-hover:translate-x-1 transition-transform" />}
                         </button>
                     </div>
+
+                    {/* Status Message */}
+                    {submitStatus.type && (
+                        <div className={`mt-4 p-4 rounded-lg ${
+                            submitStatus.type === 'success' 
+                                ? 'bg-green-50 text-green-800 border border-green-200' 
+                                : 'bg-red-50 text-red-800 border border-red-200'
+                        }`}>
+                            <p className="text-sm font-[family-name:var(--font-family-sans)]">
+                                {submitStatus.message}
+                            </p>
+                        </div>
+                    )}
 
                 </form>
             </div>

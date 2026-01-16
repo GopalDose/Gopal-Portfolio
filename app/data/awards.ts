@@ -8,6 +8,13 @@ export interface Award {
 
 export const AWARDS: Award[] = [
     {
+        title: "Winner at Devkraft Hackathon",
+        issuer: "DR.D.Y.PATILINSTITUTEOF TECHNOLOGY, PIMPRI PUNE",
+        date: "Aug 2025",
+        teamName: "Bluelock",
+        image: ""
+    },
+    {
         title: "Winner at CodeWars",
         issuer: "JSPM NTC Pune",
         date: "Mar 2025",
@@ -38,17 +45,17 @@ export const AWARDS: Award[] = [
     {
         title: "First Prize - Interview Competition",
         issuer: "Government Polytechnic, Kolhapur",
-        date: "Mar 2025"
+        teamName: "Dream Developer",
     },
     {
         title: "First Prize - Web Development Competition",
         issuer: "Government Polytechnic, Kolhapur",
-        date: "Mar 2025"
+        teamName: "Dream Developer",
     },
     {
         title: "Runner-Up - Shark Tank Project Idea Competition",
-        issuer: "JSPM NTC Pune",
-        date: "Mar 2025"
+        issuer: "Sanjeevan Engineering and Technology Institute, Panhala",
+        teamName: "Debug Demons",
     }
 ];
 
