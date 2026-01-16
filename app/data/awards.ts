@@ -12,28 +12,28 @@ export const AWARDS: Award[] = [
         issuer: "JSPM NTC Pune",
         date: "Mar 2025",
         teamName: "Debug Demons",
-        image: "/assets/projects/project1.png"
+        image: ""
     },
     {
         title: "Winner at Synapse 2.0 ML Hackathon",
         issuer: "MKSSS's Cummins College of Engineering for women",
         date: "Mar 2025",
         teamName: "Spartans",
-        image: "/assets/projects/project1.png"
+        image: ""
     },
     {
         title: "Winner at L&T NeuroHack",
         issuer: "COEP Technical University",
         date: "",
         teamName: "CodeAce",
-        image: "/assets/projects/project1.png"
+        image: ""
     },
     {
         title: "First Prize - Hackathon",
         issuer: "Dr. J.J. Magdum College of Engineering, Jaysingpur",
         date: "",
         teamName: "Dream Developer",
-        image: "/assets/projects/project1.png"
+        image: ""
     },
     {
         title: "First Prize - Interview Competition",

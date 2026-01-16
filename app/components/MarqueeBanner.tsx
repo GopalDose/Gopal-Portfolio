@@ -64,7 +64,7 @@ const MarqueeRow = ({ items, className, textClassName, separatorColor = "text-wh
 
 export default function MarqueeBanner() {
     const services = [
-        "WEB DESIGN", "APP DESIGN", "DEVELOPMENT", "WEB FLOW", "BRANDING",
+        "WEB DESIGN", "APP DESIGN", "DEVELOPMENT",
     ];
 
     const expertise = [

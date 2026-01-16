@@ -119,14 +119,24 @@ export default function ProjectsPage() {
                                     <div className="relative flex flex-col h-full bg-white border border-gray-100 hover:bg-[#111] hover:text-white transition-all duration-300 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl">
                                         {/* Image */}
                                         <div className="relative w-full aspect-[4/3] overflow-hidden bg-gray-100">
-                                            <Image
-                                                src={project.image}
-                                                alt={project.title}
-                                                width={400}
-                                                height={300}
-                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-90 group-hover:opacity-100"
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                            {project.image ? (
+                                                <>
+                                                    <Image
+                                                        src={project.image}
+                                                        alt={project.title}
+                                                        width={400}
+                                                        height={300}
+                                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-90 group-hover:opacity-100"
+                                                    />
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                                </>
+                                            ) : (
+                                                <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+                                                    <div className="text-6xl font-bold text-gray-300 font-[family-name:var(--font-family-media)]">
+                                                        {String(index + 1).padStart(2, '0')}
+                                                    </div>
+                                                </div>
+                                            )}
                                         </div>
 
                                         {/* Content */}

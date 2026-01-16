@@ -26,6 +26,8 @@ const ProjectCard = ({
     onMouseMove: (e: MouseEvent) => void
 }) => {
     const cardRef = useRef<HTMLDivElement>(null);
+    const isExternalLink = project.link.startsWith('http://') || project.link.startsWith('https://');
+    const isValidLink = project.link && project.link !== '#';
 
     useEffect(() => {
         const card = cardRef.current;
@@ -42,7 +44,7 @@ const ProjectCard = ({
         };
     }, [onMouseEnter, onMouseLeave, onMouseMove]);
 
-    return (
+    const cardContent = (
         <div
             ref={cardRef}
             className="group relative flex flex-col p-6 bg-white border border-gray-100 hover:bg-[#111] hover:text-white transition-all duration-300 w-[320px] h-[450px] shrink-0 cursor-none overflow-hidden mx-4 shadow-lg rounded-xl"
@@ -60,13 +62,21 @@ const ProjectCard = ({
 
             {/* Image */}
             <div className="relative w-full aspect-[4/3] mb-6 overflow-hidden bg-gray-100 border border-gray-200 group-hover:border-transparent rounded-lg">
-                <Image
-                    src={project.image}
-                    alt={project.title}
-                    width={320}
-                    height={240}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-90 group-hover:opacity-100"
-                />
+                {project.image ? (
+                    <Image
+                        src={project.image}
+                        alt={project.title}
+                        width={320}
+                        height={240}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                    />
+                ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+                        <div className="text-4xl font-bold text-gray-300 font-[family-name:var(--font-family-media)]">
+                            {String(index + 1).padStart(2, '0')}
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Description */}
@@ -74,6 +84,29 @@ const ProjectCard = ({
                 {project.description}
             </p>
         </div>
+    );
+
+    if (!isValidLink) {
+        return cardContent;
+    }
+
+    if (isExternalLink) {
+        return (
+            <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+            >
+                {cardContent}
+            </a>
+        );
+    }
+
+    return (
+        <Link href={project.link} className="block">
+            {cardContent}
+        </Link>
     );
 };
 
