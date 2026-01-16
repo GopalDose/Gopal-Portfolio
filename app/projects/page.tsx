@@ -73,14 +73,14 @@ export default function ProjectsPage() {
             <Header />
             
             {/* Hero Section with Watermark Heading - 80vh */}
-            <section ref={heroRef} className="relative w-full bg-white h-[70vh] flex items-center px-8 md:px-16 overflow-hidden">
+            <section ref={heroRef} className="relative w-full bg-white min-h-[50vh] md:h-[70vh] flex items-center px-4 sm:px-8 md:px-16 py-12 md:py-0 overflow-hidden">
                 <div className="w-full max-w-7xl mx-auto relative z-10">
                     {/* Watermark Heading */}
-                    <div className="relative mb-12 z-0">
+                    <div className="relative mb-8 md:mb-12 z-0">
                         {/* Light grey watermark text */}
                         <h1 
                             ref={watermarkRef}
-                            className="text-8xl md:text-[12rem] font-bold font-[family-name:var(--font-family-media)] text-gray-300 absolute -top-8 md:-top-16 left-0 select-none pointer-events-none uppercase z-0"
+                            className="text-5xl sm:text-6xl md:text-8xl lg:text-[12rem] font-bold font-[family-name:var(--font-family-media)] text-gray-300 absolute -top-4 sm:-top-6 md:-top-8 lg:-top-16 left-0 select-none pointer-events-none uppercase z-0 leading-none"
                             style={{ zIndex: 0 }}
                         >
                             PROJECTS
@@ -88,7 +88,7 @@ export default function ProjectsPage() {
                         {/* Main heading overlaying the watermark */}
                         <h2 
                             ref={headingRef}
-                            className="text-5xl md:text-7xl font-bold font-[family-name:var(--font-family-media)] text-black relative z-10 pt-8 md:pt-16"
+                            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold font-[family-name:var(--font-family-media)] text-black relative z-10 pt-6 sm:pt-8 md:pt-12 lg:pt-16"
                         >
                             Projects
                         </h2>
@@ -96,7 +96,7 @@ export default function ProjectsPage() {
 
                     {/* Description Section */}
                     <div ref={descriptionRef} className="relative z-10 max-w-3xl">
-                        <p className="text-xl md:text-2xl text-gray-700 font-[family-name:var(--font-family-sans)] leading-relaxed">
+                        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 font-[family-name:var(--font-family-sans)] leading-relaxed">
                             Projects showcase my technical expertise, design thinking, and ability to transform ideas into elegant digital solutions that solve real-world problems.
                         </p>
                     </div>
@@ -104,9 +104,9 @@ export default function ProjectsPage() {
             </section>
 
             {/* Projects Grid Section */}
-            <section ref={projectsRef} className="w-full bg-white py-10 px-8 md:px-16">
+            <section ref={projectsRef} className="w-full bg-white py-8 sm:py-10 md:py-12 px-4 sm:px-8 md:px-16">
                 <div className="w-full max-w-7xl mx-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-12">
                         {PROJECTS.map((project, index) => (
                             <div
                                 key={index}
@@ -132,7 +132,7 @@ export default function ProjectsPage() {
                                                 </>
                                             ) : (
                                                 <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-                                                    <div className="text-6xl font-bold text-gray-300 font-[family-name:var(--font-family-media)]">
+                                                    <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-300 font-[family-name:var(--font-family-media)]">
                                                         {String(index + 1).padStart(2, '0')}
                                                     </div>
                                                 </div>
@@ -140,20 +140,20 @@ export default function ProjectsPage() {
                                         </div>
 
                                         {/* Content */}
-                                        <div className="p-6 flex flex-col flex-grow">
+                                        <div className="p-4 sm:p-6 flex flex-col flex-grow">
                                             {/* Header */}
-                                            <div className="flex justify-between items-start mb-4">
-                                                <h3 className="text-xl font-bold font-[family-name:var(--font-family-media)] flex items-center gap-2">
-                                                    <span className="w-4 h-0.5 bg-black opacity-70 group-hover:bg-white group-hover:opacity-100 transition-colors"></span>
-                                                    {project.title}
+                                            <div className="flex justify-between items-start mb-3 sm:mb-4">
+                                                <h3 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-family-media)] flex items-center gap-2 flex-1 pr-2">
+                                                    <span className="w-3 sm:w-4 h-0.5 bg-black opacity-70 group-hover:bg-white group-hover:opacity-100 transition-colors flex-shrink-0"></span>
+                                                    <span className="truncate">{project.title}</span>
                                                 </h3>
-                                                <span className="text-2xl font-[family-name:var(--font-family-media)] opacity-30 group-hover:text-orange-500 group-hover:opacity-100 transition-colors">
+                                                <span className="text-xl sm:text-2xl font-[family-name:var(--font-family-media)] opacity-30 group-hover:text-orange-500 group-hover:opacity-100 transition-colors flex-shrink-0">
                                                     {String(index + 1).padStart(2, '0')}
                                                 </span>
                                             </div>
 
                                             {/* Description */}
-                                            <p className="text-sm opacity-70 leading-relaxed mb-4 font-[family-name:var(--font-family-sans)] flex-grow">
+                                            <p className="text-xs sm:text-sm opacity-70 leading-relaxed mb-3 sm:mb-4 font-[family-name:var(--font-family-sans)] flex-grow line-clamp-3">
                                                 {project.description}
                                             </p>
 
@@ -162,7 +162,7 @@ export default function ProjectsPage() {
                                                 <span className="text-xs font-bold uppercase tracking-wider font-[family-name:var(--font-family-sans)]">
                                                     View Project
                                                 </span>
-                                                <FiArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                                <FiArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform flex-shrink-0" />
                                             </div>
                                         </div>
                                     </div>
@@ -172,10 +172,10 @@ export default function ProjectsPage() {
                     </div>
 
                     {/* Back to Home Link */}
-                    <div className="mt-20 text-center">
+                    <div className="mt-12 sm:mt-16 md:mt-20 text-center">
                         <Link
                             href="/"
-                            className="group inline-flex items-center gap-3 px-6 py-3 transition-all duration-300 font-[family-name:var(--font-family-sans)] border border-gray-200 rounded-full hover:border-black hover:bg-black hover:text-white text-gray-600"
+                            className="group inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 transition-all duration-300 font-[family-name:var(--font-family-sans)] border border-gray-200 rounded-full hover:border-black hover:bg-black hover:text-white text-gray-600 text-sm sm:text-base"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

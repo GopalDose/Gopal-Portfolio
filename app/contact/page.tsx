@@ -6,7 +6,7 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { GoArrowRight } from "react-icons/go";
-import { FiMail, FiPhone, FiMapPin, FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
+import { FiMail, FiPhone, FiMapPin, FiGithub, FiLinkedin, FiTwitter, FiInstagram } from "react-icons/fi";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -385,13 +385,16 @@ export default function ContactPage() {
                                 <h4 className="font-bold font-[family-name:var(--font-family-media)] text-black mb-4">Follow Me</h4>
                                 <div className="flex gap-4">
                                     {[
-                                        { icon: FiGithub, href: "#", label: "GitHub" },
-                                        { icon: FiLinkedin, href: "#", label: "LinkedIn" },
-                                        { icon: FiTwitter, href: "#", label: "Twitter" }
+                                        { icon: FiGithub, href: "https://github.com/GopalDose", label: "GitHub" },
+                                        { icon: FiLinkedin, href: "https://www.linkedin.com/in/gopaldose21 ", label: "LinkedIn" },
+                                        { icon: FiInstagram, href: "https://www.instagram.com/gopaldose", label: "Instagram" },
+                                        { icon: FiTwitter, href: "https://twitter.com/dose_gopal", label: "Twitter" }
                                     ].map((social, index) => (
                                         <a
                                             key={index}
                                             href={social.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
                                             className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center hover:bg-orange-500 hover:scale-110 transition-all duration-300 group"
                                             aria-label={social.label}
                                         >

@@ -47,21 +47,21 @@ const ProjectCard = ({
     const cardContent = (
         <div
             ref={cardRef}
-            className="group relative flex flex-col p-6 bg-white border border-gray-100 hover:bg-[#111] hover:text-white transition-all duration-300 w-[320px] h-[450px] shrink-0 cursor-none overflow-hidden mx-4 shadow-lg rounded-xl"
+            className="group relative flex flex-col p-4 sm:p-6 bg-white border border-gray-100 hover:bg-[#111] hover:text-white transition-all duration-300 w-full md:w-[320px] h-auto md:h-[450px] min-h-[400px] md:min-h-0 shrink-0 cursor-none md:mx-4 shadow-lg rounded-xl"
         >
             {/* Header */}
-            <div className="flex justify-between items-start mb-6">
-                <h3 className="text-xl font-bold font-[family-name:var(--font-family-media)] flex items-center gap-2">
-                    <span className="w-4 h-0.5 bg-black opacity-70 group-hover:bg-white group-hover:opacity-100 transition-colors"></span>
-                    {project.title}
+            <div className="flex justify-between items-start mb-4 sm:mb-6">
+                <h3 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-family-media)] flex items-center gap-2 flex-1 pr-2">
+                    <span className="w-3 sm:w-4 h-0.5 bg-black opacity-70 group-hover:bg-white group-hover:opacity-100 transition-colors flex-shrink-0"></span>
+                    <span className="truncate">{project.title}</span>
                 </h3>
-                <span className="text-4xl font-[family-name:var(--font-family-media)] opacity-30 group-hover:text-orange-500 group-hover:opacity-100 transition-colors">
+                <span className="text-3xl sm:text-4xl font-[family-name:var(--font-family-media)] opacity-30 group-hover:text-orange-500 group-hover:opacity-100 transition-colors flex-shrink-0">
                     {String(index + 1).padStart(2, '0')}
                 </span>
             </div>
 
             {/* Image */}
-            <div className="relative w-full aspect-[4/3] mb-6 overflow-hidden bg-gray-100 border border-gray-200 group-hover:border-transparent rounded-lg">
+            <div className="relative w-full aspect-[4/3] mb-4 sm:mb-6 overflow-hidden bg-gray-100 border border-gray-200 group-hover:border-transparent rounded-lg">
                 {project.image ? (
                     <Image
                         src={project.image}
@@ -72,7 +72,7 @@ const ProjectCard = ({
                     />
                 ) : (
                     <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-                        <div className="text-4xl font-bold text-gray-300 font-[family-name:var(--font-family-media)]">
+                        <div className="text-3xl sm:text-4xl font-bold text-gray-300 font-[family-name:var(--font-family-media)]">
                             {String(index + 1).padStart(2, '0')}
                         </div>
                     </div>
@@ -80,7 +80,7 @@ const ProjectCard = ({
             </div>
 
             {/* Description */}
-            <p className="text-sm opacity-70 leading-relaxed mb-auto font-[family-name:var(--font-family-sans)]">
+            <p className="text-xs sm:text-sm opacity-70 leading-relaxed mb-auto font-[family-name:var(--font-family-sans)] line-clamp-3">
                 {project.description}
             </p>
         </div>
@@ -143,6 +143,11 @@ export default function Projects() {
 
             // 1. Horizontal Scroll
             // Determine distance: Total Width - Viewport Width
+            // Only enable horizontal scroll on desktop
+            if (window.innerWidth < 768) {
+                return;
+            }
+
             const totalWidth = track.scrollWidth;
             const viewportWidth = window.innerWidth;
             const scrollAmount = totalWidth - viewportWidth + 300; // Extra buffer
@@ -233,16 +238,65 @@ export default function Projects() {
     }, []);
 
     return (
-        <section ref={sectionRef} className="bg-white relative overflow-hidden h-screen flex flex-col justify-center">
-            <div className="container mx-auto px-4 absolute top-24 md:top-28 left-0 right-0 z-10 mb-12">
-                <h2 className="text-4xl md:text-7xl font-bold font-[family-name:var(--font-family-media)] tracking-tighter mb-6 text-black">
+        <section ref={sectionRef} className="bg-white relative overflow-hidden min-h-screen md:h-screen flex flex-col justify-center py-12 md:py-0">
+            <div className="container mx-auto px-4 sm:px-6 md:px-8 absolute top-16 sm:top-20 md:top-24 lg:top-28 left-0 right-0 z-10 mb-8 md:mb-12">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold font-[family-name:var(--font-family-media)] tracking-tighter mb-4 md:mb-6 text-black">
                     Selected Works
                 </h2>
-                <div className="h-px w-32 bg-black"></div>
+                <div className="h-px w-24 sm:w-32 bg-black"></div>
             </div>
 
-            {/* Scroll Track */}
-            <div ref={trackRef} className="flex items-center pl-[10vw] pr-[10vw] gap-8 h-full pt-32">
+            {/* Mobile: Vertical Layout */}
+            <div className="md:hidden w-full px-4 pt-32 pb-8 space-y-6">
+                {PROJECTS.slice(0, 4).map((project, index) => (
+                    <div key={index} className="w-full">
+                        <ProjectCard 
+                            project={project} 
+                            index={index}
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                            onMouseMove={handleMouseMove}
+                        />
+                    </div>
+                ))}
+                {PROJECTS.length > 4 && (
+                    <div className="w-full">
+                        <Link 
+                            href="/projects"
+                            className="group relative flex flex-col p-6 bg-white border border-gray-100 hover:bg-[#111] hover:text-white transition-all duration-300 w-full cursor-pointer overflow-hidden shadow-lg rounded-xl"
+                        >
+                            {/* Header */}
+                            <div className="flex justify-between items-start mb-6">
+                                <h3 className="text-xl font-bold font-[family-name:var(--font-family-media)] flex items-center gap-2">
+                                    <span className="w-4 h-0.5 bg-black opacity-70 group-hover:bg-white group-hover:opacity-100 transition-colors"></span>
+                                    See More
+                                </h3>
+                                <span className="text-4xl font-[family-name:var(--font-family-media)] opacity-30 group-hover:text-orange-500 group-hover:opacity-100 transition-colors">
+                                    05
+                                </span>
+                            </div>
+
+                            {/* Icon/Content Area */}
+                            <div className="relative w-full aspect-[4/3] mb-6 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 group-hover:border-transparent rounded-lg flex items-center justify-center">
+                                <div className="text-center">
+                                    <FiArrowUpRight className="w-16 h-16 text-gray-400 group-hover:text-orange-500 transition-colors mx-auto mb-4" />
+                                    <p className="text-sm text-gray-500 group-hover:text-white transition-colors font-[family-name:var(--font-family-sans)]">
+                                        {PROJECTS.length - 4} more projects
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Description */}
+                            <p className="text-sm opacity-70 leading-relaxed mb-auto font-[family-name:var(--font-family-sans)]">
+                                Explore all my projects and see the full range of my work and expertise.
+                            </p>
+                        </Link>
+                    </div>
+                )}
+            </div>
+
+            {/* Desktop: Horizontal Scroll Track */}
+            <div ref={trackRef} className="hidden md:flex items-center pl-[5vw] lg:pl-[10vw] pr-[5vw] lg:pr-[10vw] gap-6 lg:gap-8 h-full pt-24 lg:pt-32">
                 {PROJECTS.slice(0, 4).map((project, index) => (
                     <div key={index} className="project-card-wrapper transition-transform will-change-transform">
                         <ProjectCard 
@@ -258,7 +312,7 @@ export default function Projects() {
                     <div className="project-card-wrapper transition-transform will-change-transform">
                         <Link 
                             href="/projects"
-                            className="group relative flex flex-col p-6 bg-white border border-gray-100 hover:bg-[#111] hover:text-white transition-all duration-300 w-[320px] h-[450px] shrink-0 cursor-pointer overflow-hidden mx-4 shadow-lg rounded-xl"
+                            className="group relative flex flex-col p-4 sm:p-6 bg-white border border-gray-100 hover:bg-[#111] hover:text-white transition-all duration-300 w-full md:w-[320px] h-auto md:h-[450px] min-h-[400px] md:min-h-0 shrink-0 cursor-pointer md:mx-4 overflow-hidden shadow-lg rounded-xl"
                             onMouseEnter={handleMouseEnter}
                             onMouseLeave={handleMouseLeave}
                             onMouseMove={handleMouseMove as any}
@@ -293,10 +347,10 @@ export default function Projects() {
                 )}
             </div>
 
-            {/* Shared Custom Cursor */}
+            {/* Shared Custom Cursor - Desktop Only */}
             <div
                 ref={cursorRef}
-                className="fixed top-0 left-0 bg-orange-500 text-white px-4 py-2 rounded-full flex items-center gap-2 font-bold uppercase text-xs tracking-widest pointer-events-none z-[60] shadow-lg whitespace-nowrap"
+                className="hidden md:block fixed top-0 left-0 bg-orange-500 text-white px-4 py-2 rounded-full flex items-center gap-2 font-bold uppercase text-xs tracking-widest pointer-events-none z-[60] shadow-lg whitespace-nowrap"
             >
                 <span>Visit</span>
                 <FiArrowUpRight className="text-lg" />
