@@ -3,9 +3,9 @@ import React from "react";
 
 export default function Header() {
   const navItems = [
-    { name: "Experience", href: "#experience" },
-    { name: "Projects", href: "#projects" },
-    { name: "Awards", href: "#awards" },
+    { name: "Experience", href: "/experience" },
+    { name: "Projects", href: "/projects" },
+    { name: "Awards", href: "/awards" },
     { name: "Contact", href: "#contact" },
   ];
 

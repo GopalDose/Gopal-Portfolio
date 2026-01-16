@@ -2,44 +2,15 @@
 
 import React, { useRef, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { FiArrowUpRight } from "react-icons/fi";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { PROJECTS } from "../data/projects";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const PROJECTS = [
-    {
-        title: "E-Commerce",
-        description: "A full-featured online store with payment integration and realtime inventory management.",
-        image: "/assets/projects/project1.png",
-        link: "#",
-    },
-    {
-        title: "Portfolio",
-        description: "A minimalist portfolio for a photographer showcasing high-res galleries and booking system.",
-        image: "/assets/projects/project1.png",
-        link: "#",
-    },
-    {
-        title: "Task App",
-        description: "Collaborative productivity tool with kanban boards and team chat features.",
-        image: "/assets/projects/project1.png",
-        link: "#",
-    },
-    {
-        title: "Health Tracker",
-        description: "Mobile-first application for tracking daily fitness metrics and nutrition logs.",
-        image: "/assets/projects/project1.png",
-        link: "#",
-    },
-    {
-        title: "Social Platform",
-        description: "Community driven platform for creators to share and collaborate.",
-        image: "/assets/projects/project1.png",
-        link: "#",
-    }
-];
+import type { Project } from "../data/projects";
 
 const ProjectCard = ({ 
     project, 
@@ -48,7 +19,7 @@ const ProjectCard = ({
     onMouseLeave, 
     onMouseMove 
 }: { 
-    project: typeof PROJECTS[0], 
+    project: Project, 
     index: number,
     onMouseEnter: () => void,
     onMouseLeave: () => void,
@@ -239,7 +210,7 @@ export default function Projects() {
 
             {/* Scroll Track */}
             <div ref={trackRef} className="flex items-center pl-[10vw] pr-[10vw] gap-8 h-full pt-32">
-                {PROJECTS.map((project, index) => (
+                {PROJECTS.slice(0, 4).map((project, index) => (
                     <div key={index} className="project-card-wrapper transition-transform will-change-transform">
                         <ProjectCard 
                             project={project} 
@@ -250,6 +221,43 @@ export default function Projects() {
                         />
                     </div>
                 ))}
+                {PROJECTS.length > 4 && (
+                    <div className="project-card-wrapper transition-transform will-change-transform">
+                        <Link 
+                            href="/projects"
+                            className="group relative flex flex-col p-6 bg-white border border-gray-100 hover:bg-[#111] hover:text-white transition-all duration-300 w-[320px] h-[450px] shrink-0 cursor-pointer overflow-hidden mx-4 shadow-lg rounded-xl"
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                            onMouseMove={handleMouseMove as any}
+                        >
+                            {/* Header */}
+                            <div className="flex justify-between items-start mb-6">
+                                <h3 className="text-xl font-bold font-[family-name:var(--font-family-media)] flex items-center gap-2">
+                                    <span className="w-4 h-0.5 bg-black opacity-70 group-hover:bg-white group-hover:opacity-100 transition-colors"></span>
+                                    See More
+                                </h3>
+                                <span className="text-4xl font-[family-name:var(--font-family-media)] opacity-30 group-hover:text-orange-500 group-hover:opacity-100 transition-colors">
+                                    05
+                                </span>
+                            </div>
+
+                            {/* Icon/Content Area */}
+                            <div className="relative w-full aspect-[4/3] mb-6 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 group-hover:border-transparent rounded-lg flex items-center justify-center">
+                                <div className="text-center">
+                                    <FiArrowUpRight className="w-16 h-16 text-gray-400 group-hover:text-orange-500 transition-colors mx-auto mb-4" />
+                                    <p className="text-sm text-gray-500 group-hover:text-white transition-colors font-[family-name:var(--font-family-sans)]">
+                                        {PROJECTS.length - 4} more projects
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Description */}
+                            <p className="text-sm opacity-70 leading-relaxed mb-auto font-[family-name:var(--font-family-sans)]">
+                                Explore all my projects and see the full range of my work and expertise.
+                            </p>
+                        </Link>
+                    </div>
+                )}
             </div>
 
             {/* Shared Custom Cursor */}

@@ -1,0 +1,54 @@
+export interface Award {
+    title: string;
+    issuer?: string;
+    date?: string;
+    teamName?: string;
+    image?: string;
+}
+
+export const AWARDS: Award[] = [
+    {
+        title: "Winner at CodeWars",
+        issuer: "JSPM NTC Pune",
+        date: "Mar 2025",
+        teamName: "Debug Demons",
+        image: "/assets/projects/project1.png"
+    },
+    {
+        title: "Winner at Synapse 2.0 ML Hackathon",
+        issuer: "MKSSS's Cummins College of Engineering for women",
+        date: "Mar 2025",
+        teamName: "Spartans",
+        image: "/assets/projects/project1.png"
+    },
+    {
+        title: "Winner at L&T NeuroHack",
+        issuer: "COEP Technical University",
+        date: "",
+        teamName: "CodeAce",
+        image: "/assets/projects/project1.png"
+    },
+    {
+        title: "First Prize - Hackathon",
+        issuer: "Dr. J.J. Magdum College of Engineering, Jaysingpur",
+        date: "",
+        teamName: "Dream Developer",
+        image: "/assets/projects/project1.png"
+    },
+    {
+        title: "First Prize - Interview Competition",
+        issuer: "Government Polytechnic, Kolhapur",
+        date: "Mar 2025"
+    },
+    {
+        title: "First Prize - Web Development Competition",
+        issuer: "Government Polytechnic, Kolhapur",
+        date: "Mar 2025"
+    },
+    {
+        title: "Runner-Up - Shark Tank Project Idea Competition",
+        issuer: "JSPM NTC Pune",
+        date: "Mar 2025"
+    }
+];
+
