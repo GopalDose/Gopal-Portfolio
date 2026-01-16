@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Oswald } from "next/font/google"; // Using Google Fonts for better performance and style
 import "./globals.css";
 import Preloader from "./components/Preloader"; // Import Preloader
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import Footer from "./components/Footer";
 
@@ -41,6 +42,7 @@ export default function RootLayout({
         <Preloader />
         {children}
         <Footer />
+        <SpeedInsights />
       </body>
     </html>
   );
