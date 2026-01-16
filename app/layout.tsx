@@ -19,8 +19,8 @@ const media = Oswald({ // Oswald is a strong, condensed sans-serif - great for i
 });
 
 export const metadata: Metadata = {
-  title: "Gopal | Webdesigner & Photographer",
-  description: "Portfolio of Gopal - Webdesigner & Photographer based in India.",
+  title: "Gopal Vijay Dose | Full Stack Developer & Designer",
+  description: "Portfolio of Gopal Vijay Dose - Full Stack Developer based in Pune, India. Specializing in modern web development, React, Next.js, and creating exceptional digital experiences.",
 };
 
 export default function RootLayout({

@@ -21,23 +21,23 @@ export default function Contact() {
     };
 
     return (
-        <section className="bg-white py-24 px-4 min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+        <section id="contact" className="bg-white py-24 px-4 min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
             {/* Decorative Doodles/Arrows could go here absolutely positioned */}
 
             <div className="container mx-auto max-w-4xl relative z-10">
                 {/* Header */}
                 <div className="text-center mb-16 relative">
-                    <h2 className="text-5xl md:text-7xl font-bold font-[family-name:var(--font-family-media)] tracking-tight leading-tight">
-                        <span className="text-gray-300">Connect</span> <span className="text-black">and let's</span>
-                        <br />
-                        <span className="relative inline-block">
-                            Discuss
-                        </span>
-                    </h2>
-                    <p className="mt-6 text-gray-500 text-lg md:text-xl font-[family-name:var(--font-family-sans)]">
-                        Have a nice works? reach out and let's chat.
-                    </p>
-                </div>
+                        <h2 className="text-5xl md:text-7xl font-bold font-[family-name:var(--font-family-media)] tracking-tight leading-tight">
+                            <span className="text-gray-300">Connect</span> <span className="text-black">and let's</span>
+                            <br />
+                            <span className="relative inline-block">
+                                Discuss
+                            </span>
+                        </h2>
+                        <p className="mt-6 text-gray-500 text-lg md:text-xl font-[family-name:var(--font-family-sans)]">
+                            Have a nice works? reach out and let's chat.
+                        </p>
+                    </div>
 
                 {/* Form */}
                 <form ref={formRef} onSubmit={handleSubmit} className="space-y-12">

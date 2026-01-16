@@ -285,7 +285,7 @@ export default function ContactPage() {
                                         onChange={handleInputChange}
                                         onFocus={handleFocus}
                                         onBlur={handleBlur}
-                                        placeholder="your.email@example.com"
+                                        placeholder="gopaldose12345@gmail.com"
                                         required
                                         className="w-full border-b-2 border-gray-300 py-4 focus:outline-none focus:border-orange-500 transition-all duration-300 bg-transparent placeholder-gray-400 font-[family-name:var(--font-family-sans)] text-lg"
                                     />
@@ -349,8 +349,8 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <h4 className="font-bold font-[family-name:var(--font-family-media)] text-black mb-1">Email</h4>
-                                        <a href="mailto:your.email@example.com" className="text-gray-600 font-[family-name:var(--font-family-sans)] hover:text-orange-500 transition-colors">
-                                            your.email@example.com
+                                        <a href="mailto:gopaldose12345@gmail.com" className="text-gray-600 font-[family-name:var(--font-family-sans)] hover:text-orange-500 transition-colors">
+                                            gopaldose12345@gmail.com
                                         </a>
                                     </div>
                                 </div>
@@ -361,8 +361,8 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <h4 className="font-bold font-[family-name:var(--font-family-media)] text-black mb-1">Phone</h4>
-                                        <a href="tel:+1234567890" className="text-gray-600 font-[family-name:var(--font-family-sans)] hover:text-orange-500 transition-colors">
-                                            +1 (234) 567-890
+                                        <a href="tel:+918605961162" className="text-gray-600 font-[family-name:var(--font-family-sans)] hover:text-orange-500 transition-colors">
+                                            +91 8605961162
                                         </a>
                                     </div>
                                 </div>

@@ -66,7 +66,7 @@ export default function Footer() {
                     <div className="space-y-4">
                         <h3 className="text-lg font-bold uppercase tracking-wider text-gray-500 font-[family-name:var(--font-family-sans)]">Contact</h3>
                         <p className="text-2xl font-[family-name:var(--font-family-media)] hover:text-orange-500 transition-colors">
-                            <a href="mailto:hello@gopaldose.com">hello@gopaldose.com</a>
+                            <a href="mailto:gopaldose12345@gmail.com">gopaldose12345@gmail.com</a>
                         </p>
                         <p className="text-gray-400 font-[family-name:var(--font-family-sans)]">
                             Pune, India

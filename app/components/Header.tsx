@@ -12,9 +12,9 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-8 py-6 bg-white/80 backdrop-blur-md md:px-16">
       {/* Logo */}
-      <div className="text-2xl font-bold tracking-tight text-black">
+      <Link href="/" className="text-2xl font-bold tracking-tight text-black hover:text-orange-500 transition-colors">
         GD<span className="text-orange-400">.</span>
-      </div>
+      </Link>
 
       {/* Navigation */}
       <nav className="hidden md:flex items-center gap-8">
@@ -30,9 +30,12 @@ export default function Header() {
       </nav>
 
       {/* Action */}
-      <button className="hidden md:block px-6 py-2.5 text-sm font-medium text-white bg-black rounded-full hover:bg-gray-800 transition-all cursor-pointer shadow-md hover:shadow-lg">
+      <a 
+        href="mailto:gopaldose12345@gmail.com" 
+        className="hidden md:block px-6 py-2.5 text-sm font-medium text-white bg-black rounded-full hover:bg-gray-800 transition-all cursor-pointer shadow-md hover:shadow-lg"
+      >
         Get in Touch
-      </button>
+      </a>
 
       {/* Mobile Menu Button (Placeholder) */}
       <button className="md:hidden text-black">

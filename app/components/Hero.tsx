@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { gsap } from "gsap";
 
 export default function Hero() {
@@ -127,7 +128,7 @@ export default function Hero() {
                     {/* Welcome Text */}
                     <div className="welcome-text bg-black text-white px-4 md:px-6 py-2 md:py-3 inline-block">
                         <p className="text-base md:text-lg lg:text-xl font-sans">
-                            Welcome, I'm Gopal Dose
+                            Welcome, I'm Gopal Vijay Dose
                         </p>
                     </div>
 
@@ -154,8 +155,9 @@ export default function Hero() {
                     </h1>
 
                     {/* Let's Talk Button */}
-                    <button
-                        className={`lets-talk-btn mt-6 md:mt-8 px-6 md:px-8 py-3 md:py-4 bg-transparent text-black font-sans text-base md:text-lg lg:text-xl border-none outline-none transition-all duration-300 hover:opacity-70 relative ${isClicked ? 'scale-95' : 'scale-100'}`}
+                    <Link
+                        href="/#contact"
+                        className={`lets-talk-btn mt-6 md:mt-8 px-6 md:px-8 py-3 md:py-4 bg-transparent text-black font-sans text-base md:text-lg lg:text-xl border-none outline-none transition-all duration-300 hover:opacity-70 relative inline-block ${isClicked ? 'scale-95' : 'scale-100'}`}
                         style={{
                             cursor: isClicked ? 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'20\' height=\'20\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M8 5v14l11-7z\' fill=\'%23000\'/%3E%3C/svg%3E") 10 10, pointer' : 'pointer'
                         }}
@@ -166,7 +168,7 @@ export default function Hero() {
                         onMouseLeave={() => setIsClicked(false)}
                     >
                         Let's talk →
-                    </button>
+                    </Link>
                 </div>
 
                 {/* Right Side - Photo */}
